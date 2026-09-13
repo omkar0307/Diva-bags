@@ -11,6 +11,7 @@ import { MessagePromptScreen } from './screens/MessagePromptScreen';
 import { MessageScreen } from './screens/MessageScreen';
 import { CompletedScreen } from './screens/CompletedScreen';
 import { ResumeScreen } from './screens/ResumeScreen';
+import { EmptySelectionScreen } from './screens/EmptySelectionScreen';
 import { AlertCircle, RotateCcw } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -152,6 +153,15 @@ export const App: React.FC = () => {
                 finalBag={finalBag}
                 message={message}
                 onStartOver={handleDevReset}
+                loading={loading}
+              />
+            </motion.div>
+          )}
+
+          {screen === 'empty' && (
+            <motion.div key="empty">
+              <EmptySelectionScreen
+                onRestart={handleDevReset}
                 loading={loading}
               />
             </motion.div>

@@ -115,7 +115,13 @@ def confirm_dislikes(session_token: str) -> dict:
     liked_bag_ids = [d["bag_id"] for d in liked_result.data]
 
     if len(liked_bag_ids) == 0:
-        raise HTTPException(status_code=400, detail="Cannot eliminate all bags. At least one must be liked.")
+        # Zero bags remain after eliminating all choices!
+        update_session(session["id"], {
+            "status": "completed",
+            "current_screen": "completed",
+            "final_bag_id": None,
+        })
+        return {"next_action": "empty", "final_bag_id": None}
 
     if len(liked_bag_ids) == 1:
         # We have a winner!

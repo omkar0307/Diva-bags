@@ -54,6 +54,8 @@ def get_full_session_state(session_token: str) -> dict:
     session = get_session_or_404(session_token)
 
     state = {"session": session, "current_phase": None, "decisions": [], "bags": [], "final_bag": None, "message": None}
+    if session.get("status") == "completed" and not session.get("final_bag_id"):
+        session["current_screen"] = "empty"
 
     # Get current phase
     if session["current_phase_number"] > 0:

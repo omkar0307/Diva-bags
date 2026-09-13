@@ -44,7 +44,10 @@ export function useSelectionSession() {
       const serverScreen = state.session.current_screen;
       const phaseNum = state.session.current_phase_number;
 
-      if (state.session.status === 'completed' && state.final_bag) {
+      if (serverScreen === 'empty') {
+        setCandidateBags([]);
+        setScreen('empty');
+      } else if (state.session.status === 'completed' && state.final_bag) {
         setFinalBag(state.final_bag);
         setMessage(state.message);
         setScreen('completed');
@@ -221,7 +224,10 @@ export function useSelectionSession() {
       setIsSubmitting(true);
       const res = await api.confirmDislikes(token);
 
-      if (res.next_action === 'final') {
+      if (res.next_action === 'empty') {
+        setCandidateBags([]);
+        setScreen('empty');
+      } else if (res.next_action === 'final') {
         const state = await api.getFullState(token);
         setFinalBag(state.final_bag);
         setScreen('final');

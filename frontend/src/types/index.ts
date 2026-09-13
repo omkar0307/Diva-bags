@@ -14,7 +14,8 @@ export type ScreenState =
   | 'message_prompt'
   | 'message'
   | 'completed'
-  | 'resume';
+  | 'resume'
+  | 'empty';
 
 export interface SelectionSession {
   id: string;
